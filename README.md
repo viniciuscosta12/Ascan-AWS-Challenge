@@ -81,7 +81,7 @@ aws s3 mb s3://your-bucket-name --region $AWS_REGION
    sam deploy --guided
    ```
 
-   Siga as instruções e escolha um nome para a stack. Exemplo: `ascan-api-stack`.
+   Follow the instructions and choose a name for the stack. Example: `ascan-api-stack`.
 
 ### Local Test
 

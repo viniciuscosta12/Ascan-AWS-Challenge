@@ -2,7 +2,6 @@ import json
 import boto3
 import uuid
 import bcrypt
-import os
 
 dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table('usersDB')
@@ -54,13 +53,14 @@ def update_user(event, context):
     user_id = event['pathParameters']['id']
     body = json.loads(event['body'])
     
+    hashed_password = bcrypt.hashpw(body['password'].encode('utf-8'), bcrypt.gensalt())
     table.update_item(
         Key={'id': user_id},
         UpdateExpression="set username=:u, email=:e, password=:p",
         ExpressionAttributeValues={
             ':u': body['username'],
             ':e': body['email'],
-            ':p': body['password']
+            ':p': hashed_password.decode('utf-8')
         }
     )
     return {
